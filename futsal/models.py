@@ -15,7 +15,7 @@ class User(AbstractUser):
 class Futsal(models.Model):
     f_name = models.CharField(max_length=50)
     f_image = models.ImageField(upload_to='images/')
-    f_description = models.TextField(max_length=100)
+    f_description = models.TextField(max_length=500)
     f_supports_5a = models.BooleanField(default=False)
     f_supports_7a = models.BooleanField(default=False)
     f_price_5a = models.DecimalField(max_digits=10,decimal_places=2)
