@@ -21,6 +21,29 @@ class FutsalSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
 class BookingSerializer(serializers.ModelSerializer):
+    def validate(self, data):
+        game_type = data['game_type']
+        futsal = data['futsal']
+        if game_type == '5A' and not futsal.f_supports_5a:
+            raise serializers.ValidationError()
+        if game_type == '7A' and not futsal.f_supports_7a:
+            raise serializers.ValidationError()
+        
+        starting_time = data['starting_time']
+        ending_time = data['ending_time']
+        
+        if starting_time < futsal.f_opening_time or ending_time > futsal.f_closing_time:
+            raise serializers.ValidationError("Booking is only available during operating hours.")
+            
+        return data
+
+        
+        
+            
+            
+            
+
+    
     class Meta:
         model = Booking
         fields = '__all__'

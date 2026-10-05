@@ -5,8 +5,11 @@ from .models import User, Futsal, Booking
 from .serializers import UserSerializer,FutsalSerializer,BookingSerializer
 
 class FutsalViewset(viewsets.ModelViewSet):
-        queryset = Futsal.objects.all()
-        serializer_class = FutsalSerializer
+    queryset = Futsal.objects.all()
+    serializer_class = FutsalSerializer
         
-
-# Create your views here.
+class BookingViewset(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+   
+            
