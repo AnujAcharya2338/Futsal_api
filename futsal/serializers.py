@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from rest_framework import serializers
 from .models import User, Futsal, Booking
 
@@ -23,6 +23,11 @@ class FutsalSerializer(serializers.ModelSerializer):
         
 class BookingSerializer(serializers.ModelSerializer):
     def validate(self, data):
+        current_date = date.today()
+        
+        if data['date'] < current_date:
+            raise serializers.ValidationError("Please Enter a valid date.")
+        
         game_type = data['game_type']
         futsal = data['futsal']
         if game_type == '5A' and not futsal.f_supports_5a:
@@ -57,7 +62,6 @@ class BookingSerializer(serializers.ModelSerializer):
         
         data['total_price'] = total_price
 
-        
         existing_booking = Booking.objects.filter(futsal = futsal , date=data['date']).exclude(status = "cancelled")
         
         for booking in existing_booking:
@@ -66,13 +70,6 @@ class BookingSerializer(serializers.ModelSerializer):
             
         return data
 
-        
-        
-            
-            
-            
-
-    
     class Meta:
         model = Booking
         fields = '__all__'

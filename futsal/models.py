@@ -44,7 +44,7 @@ class Booking(models.Model):
     starting_time = models.TimeField()
     ending_time = models.TimeField()
     date = models.DateField()
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     game_type = models.CharField(max_length=2, choices=GAME_TYPE)
 
     
